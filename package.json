@@ -1,6 +1,6 @@
 {
   "name": "webpack-inject-entry-plugin",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A webpack plugin to inject code into the bundle.",
   "license": "MIT",
   "author": "Tate <tatethurston@gmail.com>",

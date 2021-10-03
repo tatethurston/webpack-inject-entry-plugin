@@ -30,7 +30,7 @@ Usage in a webpack plugin:
 ```js
 import InjectEntryPlugin from "webpack-inject-entry-plugin";
 
-export default class MyPlugin {
+export class MyPlugin {
   constructor(options) {
     this.options = options;
   }
@@ -47,7 +47,7 @@ export default class MyPlugin {
 Usage in `webpack.config.js`:
 
 ```js
-const InjectEntryPlugin = require("webpack-inject-entry-plugin");
+const InjectEntryPlugin = require("webpack-inject-entry-plugin").default;
 
 module.exports = {
   plugins: [

@@ -1,9 +1,0 @@
-#!/bin/bash
-
-perl -pi -e 's/PACKAGE_NAME/$REPLACE_ME/g' $(find . -maxdepth 1 -type f)
-perl -pi -e 's/PACKAGE_DISPLAY_NAME/REPLACE_ME/g' $(find . -maxdepth 1 -type f)
-perl -pi -e 's/PACKAGE_DESCRIPTION/REPLACE_ME/g' $(find . -maxdepth 1 -type f)
-
-rm ./setup
-
-git init

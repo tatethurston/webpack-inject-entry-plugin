@@ -4,11 +4,11 @@ Thanks for helping make this project better!
 
 ## Report an Issue 🐛
 
-If you find a bug or want to discuss a new feature, please [create a new issue](https://github.com/tatethurston/PACKAGE_NAME/issues). If you'd prefer to keep things private, feel free to [email me](mailto:tatethurston@gmail.com?subject=PACKAGE_NAME).
+If you find a bug or want to discuss a new feature, please [create a new issue](https://github.com/tatethurston/webpack-inject-entry-plugin/issues). If you'd prefer to keep things private, feel free to [email me](mailto:tatethurston@gmail.com?subject=webpack-inject-entry-plugin).
 
 ## Contributing Code with Pull Requests 🎁
 
-Please create a [pull request](https://github.com/tatethurston/PACKAGE_NAME/pulls). Expect a few iterations and some discussion before your pull request is merged. If you want to take things in a new direction, feel free to fork and iterate without hindrance!
+Please create a [pull request](https://github.com/tatethurston/webpack-inject-entry-plugin/pulls). Expect a few iterations and some discussion before your pull request is merged. If you want to take things in a new direction, feel free to fork and iterate without hindrance!
 
 ## Code of Conduct 🧐
 
@@ -18,4 +18,4 @@ For more guidance, check out [thoughtbot's code of conduct](https://thoughtbot.c
 
 ## Licensing 📃
 
-See the project's [MIT License](https://github.com/tatethurston/PACKAGE_NAME/blob/master/LICENSE).
+See the project's [MIT License](https://github.com/tatethurston/webpack-inject-entry-plugin/blob/master/LICENSE).

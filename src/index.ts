@@ -11,7 +11,7 @@ export interface InjectEntryPluginConfig {
   /**
    * The filepath to the source code to inject.
    */
-  path: string;
+  filepath: string;
 }
 
 const schema: Schema = {
@@ -20,7 +20,7 @@ const schema: Schema = {
     entry: {
       type: "string",
     },
-    path: {
+    filepath: {
       type: "string",
     },
     additionalProperties: false,
@@ -111,11 +111,11 @@ export default class InjectEntryPlugin {
   }
 
   apply(compiler: Compiler): void {
-    const { entry, path } = this.config;
+    const { entry, filepath } = this.config;
     if (!webpack.version || webpack.version.startsWith("4")) {
-      injectEntryWebpack4(compiler.options, entry, path);
+      injectEntryWebpack4(compiler.options, entry, filepath);
     } else {
-      injectEntryWebpack5(compiler.options, entry, path);
+      injectEntryWebpack5(compiler.options, entry, filepath);
     }
   }
 }

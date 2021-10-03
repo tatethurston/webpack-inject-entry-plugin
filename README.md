@@ -28,7 +28,7 @@ Compatible with both Webpack 4 and 5.
 Usage in a webpack plugin:
 
 ```js
-import InjectEntry from "webpack-inject-entry-plugin";
+import InjectEntryPlugin from "webpack-inject-entry-plugin";
 
 export default class MyPlugin {
   constructor(options) {
@@ -36,7 +36,7 @@ export default class MyPlugin {
   }
 
   apply(compiler) {
-    new InjectPlugin({
+    new InjectEntryPlugin({
       entry: "main",
       filepath: "./path/to/my/entry/file.js",
     }).apply(compiler);
@@ -47,11 +47,11 @@ export default class MyPlugin {
 Usage in `webpack.config.js`:
 
 ```js
-const InjectEntry = require("webpack-inject-entry-plugin");
+const InjectEntryPlugin = require("webpack-inject-entry-plugin");
 
 module.exports = {
   plugins: [
-    new InjectPlugin({
+    new InjectEntryPlugin({
       entry: "main",
       filepath: "./service-worker.js",
     }),
@@ -83,7 +83,7 @@ The name of the <a href="https://webpack.js.org/concepts/entry-points/">webpack 
 <td>string</td>
 </tr>
 <tr>
-  <td>path</td>
+  <td>filepath</td>
 <td>
 The filepath to the source code to inject.
 </td>

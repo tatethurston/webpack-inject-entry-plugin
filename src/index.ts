@@ -1,6 +1,6 @@
 import { validate } from "schema-utils";
 import webpack from "webpack";
-import type { Compiler, Configuration, Entry, EntryFunc } from "webpack";
+import type { Compiler, Configuration, Entry } from "webpack";
 import { Schema } from "schema-utils/declarations/ValidationError";
 
 export interface InjectEntryPluginConfig {
@@ -27,43 +27,36 @@ const schema: Schema = {
   },
 };
 
-/* eslint-disable */
 function injectEntryWebpack5(
   options: Compiler["options"],
   entryName: string,
   injectFilepath: string
 ): void {
-  const entry: any =
-    typeof options.entry === "function"
-      ? options.entry()
-      : Promise.resolve(options.entry);
-
-  options.entry = () =>
-    entry.then((e: any) => {
-      const injectEntry: typeof e[string] | undefined = e[entryName];
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-      if (!injectEntry?.import) {
-        throw new Error(
-          `Could not find an entry named '${entryName}'. See https://webpack.js.org/concepts/entry-points/ for an overview of webpack entries.`
-        );
-      }
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-      if (!injectEntry.import.includes(injectFilepath)) {
-        injectEntry.import.unshift(injectFilepath);
-      }
-      return e;
-    });
+  const originalEntry = options.entry;
+  options.entry = async () => {
+    const entries =
+      typeof originalEntry === "function"
+        ? await originalEntry()
+        : originalEntry;
+    const injectEntry = entries[entryName];
+    if (!injectEntry.import) {
+      throw new Error(
+        `Could not find an entry named '${entryName}'. See https://webpack.js.org/concepts/entry-points/ for an overview of webpack entries.`
+      );
+    }
+    if (!injectEntry.import.includes(injectFilepath)) {
+      injectEntry.import.unshift(injectFilepath);
+    }
+    return entries;
+  };
 }
-/* eslint-enable */
 
 function injectEntryWebpack4(
   options: Compiler["options"],
   entryName: string,
   injectFilepath: string
 ): void {
-  function injectEntry(
-    entry: Exclude<Configuration["entry"], EntryFunc>
-  ): string[] | Entry {
+  function injectEntry(entry: Configuration["entry"]): string[] | Entry {
     switch (typeof entry) {
       case "undefined": {
         throw new Error(
@@ -82,12 +75,23 @@ function injectEntryWebpack4(
         } else {
           return {
             ...entry,
+            // @ts-expect-error webpack4
             [entryName]: injectEntry(entry[entryName]) as unknown as string[],
           };
         }
       }
+      case "function": {
+        throw new Error(
+          "Invariant: Recieved unexpected value for entry: function"
+        );
+      }
       default: {
         const _exhaust: never = entry;
+        console.error(
+          Error(
+            `Invariant: Recieved unexpected value for entry: ${typeof entry}`
+          )
+        );
         return _exhaust;
       }
     }
@@ -95,8 +99,10 @@ function injectEntryWebpack4(
 
   const entry = options.entry;
   typeof entry === "function"
-    ? (options.entry = () => Promise.resolve(entry()).then(injectEntry))
-    : (options.entry = () => injectEntry(entry));
+    ? // @ts-expect-error webpack4
+      (options.entry = () => Promise.resolve(entry()).then(injectEntry))
+    : // @ts-expect-error webpack4
+      (options.entry = () => injectEntry(entry));
 }
 
 export default class InjectEntryPlugin {

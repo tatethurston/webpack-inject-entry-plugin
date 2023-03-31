@@ -1,0 +1,26 @@
+{
+  "name": "webpack-inject-entry-plugin",
+  "version": "0.0.4",
+  "description": "A webpack plugin to inject code into the bundle.",
+  "license": "MIT",
+  "author": "Tate <tatethurston@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tatethurston/webpack-inject-entry-plugin"
+  },
+  "main": "index.js",
+  "sideEffects": false,
+  "types": "index.d.ts",
+  "dependencies": {
+    "schema-utils": "^4.0.0"
+  },
+  "peerDependencies": {
+    "webpack": "^4.0.0 || ^5.0.0"
+  },
+  "keywords": [
+    "entry",
+    "inject",
+    "plugin",
+    "webpack"
+  ]
+}

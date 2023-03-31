@@ -1,6 +1,6 @@
 {
-  "name": "webpack-inject-entry-plugin",
-  "version": "0.0.4",
+  "name": "webpack-inject-entry-plugin-dev",
+  "version": "0.0.1",
   "description": "A webpack plugin to inject code into the bundle.",
   "license": "MIT",
   "author": "Tate <tatethurston@gmail.com>",
@@ -8,28 +8,21 @@
     "type": "git",
     "url": "https://github.com/tatethurston/webpack-inject-entry-plugin"
   },
-  "main": "dist/index.js",
-  "files": [
-    "dist/*"
-  ],
   "scripts": {
+    "build": "tsc",
     "clean": "rm -rf dist",
-    "lint": "pnpm typecheck && prettier --check . && prettier-package-json --list-different '{,example/,}package.json' && eslint .",
+    "lint": "npm run typecheck && prettier --check . && prettier-package-json --list-different '{,example/,}package.json' && eslint .",
     "lint:fix": "prettier --write . && prettier-package-json --write '{,example/}package.json' && eslint --fix .",
-    "package:build": "pnpm clean && pnpm tsc",
-    "package:prune": "rm dist/**/test.{d.ts,js}",
-    "test": "pnpm jest",
-    "typecheck": "pnpm tsc --noEmit",
-    "version": "pnpm run build && git add -A package.json",
-    "postversion": "git push && git push --tags"
+    "package:build": "npm run clean && npm run build && npm run package:prune && npm run package:copy:files",
+    "package:copy:files": "cp ./LICENSE ./README.md dist/ && cp ./public.package.json dist/package.json",
+    "package:prune": "find dist -name test.* -delete",
+    "prepare": "husky install",
+    "test": "jest",
+    "test:ci": "jest --coverage",
+    "typecheck": "tsc --noEmit"
   },
-  "sideEffects": false,
-  "types": "dist/index.d.ts",
   "dependencies": {
     "schema-utils": "^4.0.0"
-  },
-  "peerDependencies": {
-    "webpack": "^4.0.0 || ^5.0.0"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.20.2",
